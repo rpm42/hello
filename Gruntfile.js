@@ -33,15 +33,36 @@ module.exports = function(grunt) {
     },
 
 
+    concat: {
+      core: {
+        src: [
+          "bower_components/jquery/dist/jquery.js",
+          "bower_components/lodash/dist/lodash.js",
+          "bower_components/moment/min/moment-with-locales.js",
+          "bower_components/simple-uuid/uuid.js",
+          "bower_components/angular/angular.js"
+        ],
+        dest: "static/js/core.js"
+      },
+      app: {
+        src: [
+          "scripts/app.js"
+        ],
+        dest: "static/js/app.js"
+      }
+    }
+
+
   });
 
   // Load plugins
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-concat');
 
 
 
   // Default task(s).
-  grunt.registerTask('default', ['less:development', 'copy']);
+  grunt.registerTask('default', ['less:development', 'copy', 'concat']);
 
 };

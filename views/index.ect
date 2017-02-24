@@ -1,46 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello</title>
-    <link rel="stylesheet" type="text/css" href="css/app.css">
-    <!-- библиотека LoDash -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
+  <title>Hello</title>
+  <link rel="stylesheet" type="text/css" href="css/app.css">
+  <script src="js/core.js"></script>
+  <script src="js/app.js"></script>
 </head>
-<body>
-    <div class="uk-container uk-container-center main-container">
-        <div class="uk-grid">
-            <div class="uk-width-1-2 uk-container-center">
-                <form class="uk-form" action="/" method="POST">
-                    <div class="uk-form-row">
-                        <label class="uk-form-label" for="message-input">Message</label>
-                        <div class="uk-form-controls">
-                            <textarea class="uk-width-1-1" name="message" placeholder="Text input" id="message-input"  rows="3"></textarea>
-                        </div>  
-                    </div>
-                    <div class="uk-form-row">
-                        <input type="submit" class="uk-button">
-                    </div>
-                </form>
+<body ng-app="hello">
+  <div class="uk-container uk-container-center main-container" ng-controller="MessageController">
+    <div class="uk-grid">
+      <div class="uk-width-1-2 uk-container-center">
 
-                <hr>
-
-                  
-                <ul class="uk-list uk-list-line">
-                    <% for msg in @msgs : %>
-                        <li>
-                           <div class="uk-article">
-                                <div class="date uk-article-meta">
-                                    <%= msg.created_at %>
-                                    <a href="/msg/<%= msg.id %>" class="del-msg uk-icon-hover uk-icon-trash-o"></a>
-                                </div>
-                                <p class="uk-article-lead"><%= msg.text %></p>
-                            </div>
-                        </li>
-                    <% end %>  
-                </ul>
-            </div>
+        <div class="uk-form-row">
+          <label class="uk-form-label" for="message-input">Message</label>
+          <div class="uk-form-controls">
+            <textarea class="uk-width-1-1" 
+            ng-model="message.text"
+            placeholder="Hello!" 
+            id="message-input"
+            rows="3"></textarea>
+          </div>  
         </div>
+
+        <div class="uk-form-row">
+          <button class="uk-button" ng-click="createMessage()">SEND</button>
+        </div>
+
+          
+        <ul class="uk-list uk-list-line">
+          <li ng-repeat="msg in messages | reverse">
+             <div class="uk-article">
+              <div class="date uk-article-meta">
+                {{ moment(msg.created_at).fromNow() }}
+                <button 
+                class="msg-btn uk-icon-hover uk-icon-pencil" 
+                ng-hide="edit.id == msg.id" 
+                ng-click="startEdit(msg.id, msg.text)"></button>
+                <button ng-click="deleteMessage(msg.id)"
+                class="msg-btn uk-icon-hover uk-icon-trash"></button>
+              </div>
+              <div class="uk-article-lead" ng-hide="edit.id == msg.id" ng-dblclick="startEdit(msg.id, msg.text)">
+                {{msg.text}}
+              </div>
+              <div class="edit-buttons" ng-show="edit.id == msg.id">
+                <div class="uk-article-lead" contenteditable ng-model="edit.text" ng-bind-html="edit.text"></div>
+                <div><button class="uk-button" ng-click="updateMessage(msg.id)">Save</button></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+
+      </div>
     </div>
+  </div>
 
 
 

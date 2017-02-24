@@ -1,0 +1,25 @@
+{
+  "name": "hello",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "yakomak"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/rpm42/hello",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "uikit": "^2.27.2",
+    "moment": "^2.17.1",
+    "lodash": "^4.17.4",
+    "angular": "^1.6.2",
+    "simple-uuid": "^1.0.1"
+  }
+}
